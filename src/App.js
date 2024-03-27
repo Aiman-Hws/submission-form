@@ -43,6 +43,7 @@ function App() {
           <div class="mb-3">
             <label class="form-label">Your best Subject*</label>
           </div>
+          radio buttons
           <div class="form-check form-check-inline mb-3">
             <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="English"/>
             <label class="form-check-label" for="inlineCheckbox1">English</label>
@@ -77,6 +78,10 @@ function App() {
             <textarea class="form-control" name="" id="" rows="8" placeholder="About your self"></textarea>
           </div>
           <label for="url" class="form-label">Submit Or Reset</label>
+          <div class="mb-3 mx-5 justify-content-center">
+          <button type="submit" className="btn btn-primary m-3 btn-lg">Reset</button>
+          <button type="submit" className="btn btn-primary m-3 btn-lg">Submit</button>
+          </div>
 
         </form>
       </div>
