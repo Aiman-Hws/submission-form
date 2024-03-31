@@ -1,60 +1,110 @@
 import './App.css';
 import "bootstrap/dist/css/bootstrap.min.css";
+import { useState } from 'react';
 
 function App() {
+
+  const [contacts , setContacts] = useState([]);
+  const [formData, setFormData] = useState({
+    firstName: '',
+    lastName: '',
+    email: '',
+    phone: '',
+    gender: '',
+    subject: ''
+  });
+
+  const formSubmit = (e) => {
+    e.preventDefault();
+    const newContact = { ...formData };
+    setContacts([...contacts, newContact]);
+    setFormData({
+      firstName: '',
+      lastName: '',
+      email: '',
+      phone: '',
+      gender: '',
+      subject: ''
+    });
+  }
+
+  const handleChange = (e) => {
+    const {name , value} = e.target;
+    setFormData({
+      ...formData,
+      [name]: value
+    });
+  }
+
+  const reset = () => {
+
+  }
+
   return (
     
   <div class="container">
     <div class="row justify-content-center">
       <div class="col-md-6">
-        <form>
+        <form onSubmit={formSubmit}>
           <h1>Form in React</h1>
           <div class="mb-3">
-            <label for="firstName" class="form-label">First Name*</label>
-            <input type="text" class="form-control" id="firstName" placeholder="Enter First Name"/>
+            <label htmlFor="firstName" className="form-label">First Name*</label>
+            <input type="text" className="form-control" name="firstName" id="firstName" placeholder="Enter First Name" 
+                    value={formData.firstName} onChange={handleChange} required/>
           </div>
           <div class="mb-3">
-            <label for="lastName" class="form-label">Last Name*</label>
-            <input type="text" class="form-control" id="lastName" placeholder="Enter Last Name"/>
+            <label htmlFor="lastName" className="form-label">Last Name*</label>
+            <input type="text" className="form-control" name="lastName" id="lastName" placeholder="Enter Last Name" 
+                    value={formData.lastName} onChange={handleChange} required/>
           </div>
           <div class="mb-3">
-            <label for="email" class="form-label">Enter Email*</label>
-            <input type="email" class="form-control" id="email" placeholder="Enter Email"/>
+            <label htmlFor="email" className="form-label">Enter Email*</label>
+            <input type="email" className="form-control" name="email" id="email" placeholder="Enter Email" 
+                    value={formData.email} onChange={handleChange} required/>
           </div>
           <div class="mb-3">
-            <label for="contact" class="form-label">Contact*</label>
-            <input type="number" class="form-control" id="contact" placeholder="Enter Mobile number"/>
+            <label htmlFor="phone" className="form-label">Contact*</label>
+            <input type="number" className="form-control" name="phone" id="phone" placeholder="Enter Mobile number" 
+                    value={formData.phone} onChange={handleChange} required/>
           </div>
           <div class="mb-3">
             <label class="form-label">Gender*</label>
           </div>
           <div class="form-check form-check-inline mb-3">
-            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="Male"/>
-            <label class="form-check-label" for="inlineRadio1">Male</label>
+            <input class="form-check-input" type="radio" name="gender" id="male" 
+                   onChange={handleChange} checked={formData.gender === 'Male'} value="Male"/>
+            <label class="form-check-label" htmlFor="gender">Male</label>
           </div>
           <div class="form-check form-check-inline mx-5">
-            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="Female"/>
-            <label class="form-check-label" for="inlineRadio2">Female</label>
+            <input class="form-check-input" type="radio" name="gender" id="female" 
+                   onChange={handleChange} checked={formData.gender === 'Female'} value="Female"/>
+            <label class="form-check-label" htmlFor="gender">Female</label>
           </div>
           <div class="form-check form-check-inline mx-5">
-            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio3" value="Other"/>
-            <label class="form-check-label" for="inlineRadio3">Other</label>
+            <input class="form-check-input" type="radio" name="gender" id="other" 
+                   onChange={handleChange} checked={formData.gender === 'Other'} value="Other"/>
+            <label class="form-check-label" htmlFor="gender">Other</label>
           </div>
           <div class="mb-3">
             <label class="form-label">Your best Subject*</label>
           </div>
-          radio buttons
           <div class="form-check form-check-inline mb-3">
-            <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="English"/>
+            <input class="form-check-input" type="checkbox" name="subject" id="English" value="English"
+                    onChange={handleChange} checked={formData.subject === 'English'}
+            />
             <label class="form-check-label" for="inlineCheckbox1">English</label>
           </div>
           <div class="form-check form-check-inline mb-3">
-            <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="Maths"/>
-            <label class="form-check-label" for="inlineCheckbox2">Maths</label>
+            <input class="form-check-input" type="checkbox" name="subject" id="Maths" value="Maths"
+                    onChange={handleChange} checked={formData.subject === 'Maths'}
+            />
+            <label class="form-check-label" for="Maths">Maths</label>
           </div>
           <div class="form-check form-check-inline mb-3">
-            <input class="form-check-input" type="checkbox" id="inlineCheckbox3" value="Physics"/>
-            <label class="form-check-label" for="inlineCheckbox3">Physics</label>
+            <input class="form-check-input" type="checkbox" name="subject" id="Physics" value="Physics"
+                    onChange={handleChange} checked={formData.subject === 'Physics'}
+            />
+            <label class="form-check-label" for="Physics">Physics</label>
           </div>
           <div class="mb-3">
             <label for="formFile" class="form-label">Upload Resume*</label>
@@ -78,12 +128,20 @@ function App() {
             <textarea class="form-control" name="" id="" rows="8" placeholder="About your self"></textarea>
           </div>
           <label for="url" class="form-label">Submit Or Reset</label>
-          <div class="mb-3 mx-5 justify-content-center">
-          <button type="submit" className="btn btn-primary m-3 btn-lg">Reset</button>
+          <div class="justify-content-center">
+          <button type="submit" className="btn btn-primary m-3 btn-lg" onClick={reset}>Reset</button>
           <button type="submit" className="btn btn-primary m-3 btn-lg">Submit</button>
           </div>
 
         </form>
+        <h2>Contacts</h2>
+        <ul>
+          {contacts.map((contact, index) => (
+            <li key={index}>
+              {contact.firstName} - {contact.lastName} - {contact.email} - {contact.phone} - {contact.gender} - {contact.subject}
+            </li>
+          ))}
+        </ul>
       </div>
     </div>
   </div>
